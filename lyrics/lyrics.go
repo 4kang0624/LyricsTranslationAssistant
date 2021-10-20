@@ -1,5 +1,7 @@
 package lyrics
 
+import "sync"
+
 type Lyric struct {
 	Original string
 	Pronunciation string
@@ -11,6 +13,7 @@ type music struct {
 }
 
 var m *music
+var once sync.Once
 
 func inputOriginalLyrics(data string) *Lyric {
 	line := Lyric{data, "", ""}
@@ -18,6 +21,12 @@ func inputOriginalLyrics(data string) *Lyric {
 }
 
 func Lyrics()*music {
+	if m == nil {
+		once.Do(func() {
+			m = &music{}
+			m.AddLyric("")
+		})
+	}
 	return m
 }
 
@@ -28,4 +37,8 @@ func (m *music) AddLyric(data string) {
 
 func (m *music) ShowAllLyrics() []*Lyric {
 	return m.lyrics
+}
+
+func (m *music) InputPronunciation(data string) {
+
 }

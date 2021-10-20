@@ -1,0 +1,11 @@
+{{define "home"}}
+<!doctype html>
+<html lang="en">
+<body>
+{{template "header"}}
+    {{range .Lyrics}}
+        {{template "lyrics" .}}
+    {{end}}
+</body>
+</html>
+{{end}}
